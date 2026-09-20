@@ -1,0 +1,10 @@
+num=(12, 15, 18, 12, 20, 15, 18)
+num_set=set(num)
+print(num_set)
+num_set.add("100")
+num_set.discard(12)
+print(50 in num_set)
+num1={12, 15, 18, 12, 20, 15, 18}
+print(num_set | num1)
+print(num_set & num1)
+print(num_set - num1)
