@@ -7,6 +7,11 @@
   {
     "id": 2,
     "title": "学习 Agent 开发",
+    "completed": true
+  },
+  {
+    "id": 3,
+    "title": "学习JAVA",
     "completed": false
   }
 ]
