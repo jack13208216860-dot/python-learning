@@ -5,15 +5,15 @@ from openai import OpenAI
 load_dotenv(override=True)
 
 client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY"),
-    base_url="https://novaapi.top"
+    api_key=os.getenv("DEEPSEEK_API_KEY"),
+    base_url="https://api.deepseek.com"
 )
 
-MODEL = "gpt-5.6-sol"
+MODEL = "deepseek-flash"
 
 instructions = """
 你是一位耐心的python学习助手。
-回答使用中文，先给简介结论，再解释原因。
+回答使用中文，先给简洁结论，再解释原因。
 """
 print("AI助手已启动。输入exit退出。")
 
