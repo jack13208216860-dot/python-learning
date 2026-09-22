@@ -11,7 +11,7 @@ client = OpenAI(
 )
 
 response = client.responses.create(
-    model="gpt-6-astra",
+    model="gpt-5.6-sol",
     input="请用一句话解释什么是 Python 函数。"
 )
 print(response.output_text)

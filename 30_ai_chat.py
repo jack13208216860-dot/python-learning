@@ -9,7 +9,7 @@ client = OpenAI(
     base_url="https://novaapi.top"
 )
 
-MODEL = "gpt-6-astra"
+MODEL = "gpt-5.6-sol"
 
 instructions = """
 你是一位耐心的python学习助手。
