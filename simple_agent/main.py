@@ -1,4 +1,4 @@
-from agent import SimpleAgent
+from .agent import SimpleAgent
 
 
 def main():

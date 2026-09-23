@@ -1,3 +1,6 @@
 .venv/
 __pycache__/
 .env
+simple_agent/data/sessions/
+.pytest_cache/
+.pytest_tmp_*/
