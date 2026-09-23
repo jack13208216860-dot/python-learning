@@ -5,3 +5,4 @@ openai
 fastapi
 uvicorn
 httpx
+sentence-transformers

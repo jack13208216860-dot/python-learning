@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from .prompts import AGENT_INSTRUCTIONS
 from .tools import TOOL_DEFINITIONS, execute_tool
 
 
@@ -49,22 +50,7 @@ class SimpleAgent:
 
             response = self.client.responses.create(
                 model=self.model,
-                instructions=(
-                    "你是一个会使用工具并具有对话记忆的中文助手。"
-                    "查询日期或时间时，调用 get_current_time。"
-                    "进行数学计算时，调用 calculate。"
-                    "查看任务时, 调用list_tasks。"
-                    "只有当用户明确要求添加任务时，才调用 add_task。"
-                    "只要用户明确要求完成某个编号的任务，"
-                    "无论该编号是否存在，都必须调用 complete_task,"
-                    "必须以工具返回结果为准，不能根据对话记录自行判断。"
-                    "如果用户没有提供任务编号，先查看任务，不要猜测编号。"
-                    "用户要求删除任务时，只能调用 request_delete_task。"
-                    "不能在同一轮调用 confirm_delete_task。"
-                    "只有用户在后续消息中明确输入确认删除时，"
-                    "才能调用 confirm_delete_task。"
-                    "获得足够信息后，直接回答用户。"
-                ),
+                instructions=AGENT_INSTRUCTIONS,
                 input=self.conversation_items,
                 tools=TOOL_DEFINITIONS
             )

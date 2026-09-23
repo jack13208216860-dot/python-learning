@@ -4,3 +4,7 @@ __pycache__/
 simple_agent/data/sessions/
 .pytest_cache/
 .pytest_tmp_*/
+simple_agent/knowledge/knowledge_vectors.npy
+simple_agent/knowledge/knowledge_index_meta.json
+simple_agent/knowledge/knowledge_chunks.json
+simple_agent/knowledge/documents/

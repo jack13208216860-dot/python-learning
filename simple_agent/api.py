@@ -1,6 +1,7 @@
 import os
 import secrets
 
+from pathlib import Path
 from fastapi import (
     Depends,
     FastAPI,
@@ -8,7 +9,7 @@ from fastapi import (
     HTTPException
 )
 from pydantic import BaseModel, Field
-
+from fastapi.responses import FileResponse
 from .agent import SimpleAgent
 from .session_storage import (
     delete_session_file,
@@ -17,6 +18,11 @@ from .session_storage import (
     save_session
 )
 
+
+STATIC_DIRECTORY = (
+    Path(__file__).parent
+    / "static"
+)
 
 app = FastAPI(
     title="Simple Agent API",
@@ -87,6 +93,14 @@ def read_root():
         "active_sessions": len(agents)
     }
 
+@app.get(
+    "/chat-ui",
+    include_in_schema=False
+)
+def chat_ui():
+    return FileResponse(
+        STATIC_DIRECTORY / "index.html"
+    )
 
 @app.post(
     "/chat",

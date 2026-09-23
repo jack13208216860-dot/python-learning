@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Simple Agent</title>
+
+    <style>
+        body {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .settings,
+        .chat {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            background: white;
+        }
+
+        input,
+        button {
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        .settings input {
+            width: 100%;
+        }
+
+        #messages {
+            min-height: 300px;
+            max-height: 500px;
+            padding: 10px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            white-space: pre-wrap;
+        }
+
+        .user {
+            background: #dbeafe;
+        }
+
+        .agent {
+            background: #dcfce7;
+        }
+
+        .error {
+            background: #fee2e2;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        #messageInput {
+            flex: 1;
+        }
+
+        #sendButton {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Simple Agent</h1>
+
+    <div class="settings">
+        <label for="sessionId">会话编号</label>
+        <input
+            id="sessionId"
+            value="browser-session"
+            maxlength="50"
+        >
+
+        <label for="apiKey">Agent API Key</label>
+        <input
+            id="apiKey"
+            type="password"
+            placeholder="输入.env中的AGENT_API_KEY"
+        >
+    </div>
+
+    <div class="chat">
+        <div id="messages"></div>
+
+        <div class="input-row">
+            <input
+                id="messageInput"
+                placeholder="请输入问题"
+            >
+
+            <button id="sendButton">
+                发送
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const messages = document.getElementById("messages");
+        const sessionId = document.getElementById("sessionId");
+        const apiKey = document.getElementById("apiKey");
+        const messageInput = document.getElementById("messageInput");
+        const sendButton = document.getElementById("sendButton");
+
+        function addMessage(role, text, className) {
+            const message = document.createElement("div");
+
+            message.className = `message ${className}`;
+            message.textContent = `${role}：${text}`;
+
+            messages.appendChild(message);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const message = messageInput.value.trim();
+            const currentSessionId = sessionId.value.trim();
+            const currentApiKey = apiKey.value.trim();
+
+            if (!currentSessionId) {
+                addMessage("错误", "请输入会话编号", "error");
+                return;
+            }
+
+            if (!currentApiKey) {
+                addMessage("错误", "请输入Agent API Key", "error");
+                return;
+            }
+
+            if (!message) {
+                return;
+            }
+
+            addMessage("你", message, "user");
+
+            messageInput.value = "";
+            sendButton.disabled = true;
+            sendButton.textContent = "等待中";
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-API-Key": currentApiKey
+                    },
+                    body: JSON.stringify({
+                        session_id: currentSessionId,
+                        message: message
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.detail || "请求失败"
+                    );
+                }
+
+                addMessage(
+                    "Agent",
+                    data.answer,
+                    "agent"
+                );
+
+            } catch (error) {
+                addMessage(
+                    "错误",
+                    error.message,
+                    "error"
+                );
+
+            } finally {
+                sendButton.disabled = false;
+                sendButton.textContent = "发送";
+                messageInput.focus();
+            }
+        }
+
+        sendButton.addEventListener(
+            "click",
+            sendMessage
+        );
+
+        messageInput.addEventListener(
+            "keydown",
+            function (event) {
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+            }
+        );
+    </script>
+</body>
+</html>

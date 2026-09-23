@@ -1,0 +1,34 @@
+[
+  {
+    "query": "如何定义一段能够重复使用的代码",
+    "expected_title": "Python函数"
+  },
+  {
+    "query": "怎样通过模板创建多个对象",
+    "expected_title": "Python类"
+  },
+  {
+    "query": "程序运行出错后应该怎样处理",
+    "expected_title": "Python异常处理"
+  },
+  {
+    "query": "模型如何选择并运行Python函数",
+    "expected_title": "Agent工具调用"
+  },
+  {
+    "query": "为什么Agent需要连续执行多个步骤",
+    "expected_title": "Agent循环"
+  },
+  {
+    "query": "法国的首都是哪里",
+    "expected_title": null
+  },
+  {
+    "query": "红烧肉应该怎么做",
+    "expected_title": null
+  },
+  {
+    "query": "明天火星上的天气怎么样",
+    "expected_title": null
+  }
+]

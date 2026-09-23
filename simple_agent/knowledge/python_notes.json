@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Python函数",
+    "content": "函数是可以重复调用的代码块，使用def关键字定义，可以接收参数并返回结果。"
+  },
+  {
+    "title": "Python类",
+    "content": "类是创建对象的模板，使用class关键字定义。对象可以拥有属性和方法。"
+  },
+  {
+    "title": "Python异常处理",
+    "content": "Python使用try、except处理异常，还可以使用finally执行无论是否报错都需要运行的代码。"
+  },
+  {
+    "title": "Agent工具调用",
+    "content": "Agent工具调用是指模型根据用户意图选择工具，生成参数，由Python执行工具，再把结果返回给模型。"
+  },
+  {
+    "title": "Agent循环",
+    "content": "Agent循环会反复执行模型推理、工具调用和结果反馈，直到模型生成最终回答或达到最大轮数。"
+  }
+]

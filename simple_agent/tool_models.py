@@ -27,3 +27,9 @@ class AddTaskArguments(BaseModel):
 
 class TaskIdArguments(BaseModel):
     task_id: int = Field(gt=0)
+
+class KnowledgeSearchArguments(BaseModel):
+    keyword: str = Field(
+        min_length=1,
+        max_length=50
+    )

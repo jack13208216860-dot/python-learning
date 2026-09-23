@@ -1,10 +1,12 @@
 from datetime import datetime
 from pydantic import ValidationError
+from .knowledge_tools import search_knowledge
 
 from .tool_models import (
     AddTaskArguments,
     CalculateArguments,
     EmptyArguments,
+    KnowledgeSearchArguments,
     TaskIdArguments
 )
 from .task_tools import (add_task, 
@@ -51,7 +53,8 @@ TOOL_FUNCTIONS = {
     "add_task": add_task,
     "complete_task": complete_task,
     "request_delete_task": request_delete_task,
-    "confirm_delete_task": confirm_delete_task
+    "confirm_delete_task": confirm_delete_task,
+    "search_knowledge": search_knowledge
 
 }
 
@@ -62,7 +65,8 @@ TOOL_ARGUMENT_MODELS = {
     "add_task": AddTaskArguments,
     "complete_task": TaskIdArguments,
     "request_delete_task": TaskIdArguments,
-    "confirm_delete_task": EmptyArguments
+    "confirm_delete_task": EmptyArguments,
+    "search_knowledge": KnowledgeSearchArguments
 }
 
 TOOL_DEFINITIONS = [
@@ -143,6 +147,29 @@ TOOL_DEFINITIONS = [
             "type": "object",
             "properties": {},
             "required": [],
+            "additionalProperties": False
+        },
+        "strict": True
+    },
+        {
+        "type": "function",
+        "name": "search_knowledge",
+        "description": (
+            "在本地Python和Agent知识库中搜索资料，"
+            "返回相关文本、来源文件、文本块编号和相似度。"
+            "回答知识库问题前应调用此工具。"
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "keyword": {
+                    "type": "string",
+                    "description": "用于搜索知识库的简短关键词，例如函数、异常、Agent循环"
+                }
+            },
+            "required": [
+                "keyword"
+            ],
             "additionalProperties": False
         },
         "strict": True
